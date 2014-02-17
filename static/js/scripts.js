@@ -1,7 +1,8 @@
-function sendRequestToModel(city)
+<!-- Raul Hernandez Lopez 2014 -->
+function sendRequestToModel(city, is_open_in_weekends, has_support_desk)
 {
-    $.get("/placesnearby/web/Office.php",
-          {city: city},
+    $.get("/../../placesnearby/web/search",
+          {city: city, is_open_in_weekends: is_open_in_weekends , has_support_desk: has_support_desk},
           requestHandler,
           'json'
     );
@@ -19,14 +20,23 @@ function requestHandler(response){
 $(document).ready(function() {
     var timer,
         delayInMilliseconds = 1000,
-        $searchBox = $('#searchBox');
+        $searchName = $('#searchName');
+        $searchIsOpen = $('#searchIsOpen');
+        $searchHasSupport = $('#searchHasSupport');
+   
+    $searchIsOpen.on('change', function(){
+       this.value = this.checked ? "Y" : "N";
+    }).change();
+    $searchHasSupport.on('change', function(){
+       this.value = this.checked ? "Y" : "N";
+    }).change();
 
-    $searchBox.focus();
+    $searchName.focus();
 
-    $searchBox.on('keyup', function(e) {
+    $searchName.on('keyup', function(e) {
         clearTimeout(timer);
         timer = setTimeout(function() {
-            sendRequestToModel($searchBox.val());
+            sendRequestToModel($searchName.val(), $searchIsOpen.val(), $searchHasSupport.val());
         }, delayInMilliseconds);
     });
 });
