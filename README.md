@@ -1,3 +1,3 @@
 jQuery & Ajax with Silex 2.0
 ----------------------
-Few simple files for a sinmple framework
+Few files for a basic jQuery & Ajax request
